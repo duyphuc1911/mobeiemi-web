@@ -1,6 +1,5 @@
 # Mobeiemi Portfolio & Keycap Store
 
-> [Đọc báo cáo đồ án Profile Portfolio của Nhóm 8](./README_BAO_CAO.md): mục lục, mục tiêu, phạm vi, kiến trúc, cơ sở dữ liệu, chức năng, API, bảo mật, kiểm thử, hạn chế và hướng phát triển.
 
 Website gồm hai phần:
 
