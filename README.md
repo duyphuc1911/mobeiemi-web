@@ -1,792 +1,269 @@
-# Dopefolio 🔥
+# Mobeiemi Portfolio & Keycap Store
 
-## A Blazing Fast Multipage Portfolio Template for Developers 🚀
+> [Đọc báo cáo đồ án Profile Portfolio của Nhóm 8](./README_BAO_CAO.md): mục lục, mục tiêu, phạm vi, kiến trúc, cơ sở dữ liệu, chức năng, API, bảo mật, kiểm thử, hạn chế và hướng phát triển.
 
-## [Demo Link](https://dopefolio.netlify.app) 🔗
+Website gồm hai phần:
 
-<div align="center">
-  <img src="https://i.postimg.cc/CxZXqhWM/ezgif-com-video-to-gif-1.gif" alt="Dopefolio Demo" width="100%" />
-  <br>
-</div>
+- **Portfolio**: trang giới thiệu, kỹ năng và dự án.
+- **Keycap Store**: cửa hàng demo có đăng ký/đăng nhập, hồ sơ khách hàng, đặt hàng và trang quản trị sản phẩm.
 
-<br/>
-<br/>
+Frontend dùng HTML, CSS, Sass và JavaScript thuần. Backend dùng Node.js tích hợp sẵn HTTP server và SQLite; không cần cài MySQL/PostgreSQL hay chạy một dịch vụ database riêng.
 
----
+## Yêu cầu
 
-<br/>
+- Node.js **22.5.0 trở lên** (dự án dùng `node:sqlite`).
+- npm đi kèm Node.js.
 
-## ( Update ): Project Achievement 🏆 
+Kiểm tra phiên bản:
 
-**Dopefolio** has been listed as the **Hottest Frontend Tool of 2021** According to **CSS Tricks** 🥳. Thanks to all of you for supporting this project 🙌
-
-**[Link to the CSS tricks article on Dopefolio](https://css-tricks.com/hottest-front-end-tools-in-2021/#aa-58-dopefolio)**   
-
-<br/>
-
-----
-
-<br/>
-
-## Features
-
-- ### **Easy to Setup 💯** 
-- ### **Free to Use ( OpenSource ) 🥳** 
-- ### **No Additional Frameworks 🤘** 
-- ### **No Additional Libraries 🙌** 
-- ### **Multi Page 💎** 
-- ### **Fully Responsive 🚀** 
-- ### **Super Fast and Optimized for SEO ⚡** 
-- ### **Great Audits Score 🎖️** 
-
-<img src="https://i.ibb.co/1dD8Mky/Screenshot-from-2021-08-28-14-38-30.png" alt="Dopefolio Audits" width="100%" />
-
-<br/>
-<br/>
-
-## Test the template with different colors on the playground link 🚀
-
-## [Playground Link](https://dopefolio-playground.netlify.app) 🔗
-
-<div align="center">
-  <img src="https://i.postimg.cc/xjsqN9GG/ezgif-com-gif-maker-2.gif" alt="Dopefolio Playground" width="100%" />
-  <br>
-</div>
-
-<br/>
-
-----
-
-<br/>
-
-## Technologies used 🛠️
-
-- **HTML** 🚀
-- **CSS** 🚀
-- **JavaScript** 🚀
-- **SASS** 🚀
-
----
-
-<br/>
-
-## How To Use 🔧
-
-From your command line, first clone Dopefolio:
-
-```bash
-# Clone this repository
-$ git clone https://github.com/rammcodes/dopefolio
-
-# Go into the repository
-$ cd dopefolio
-
-# Remove current origin repository
-$ git remote remove origin
+```powershell
+node --version
+npm --version
 ```
 
-<br/>
+## Cài đặt và chạy
 
-Then you can install the dependencies
+Mở PowerShell tại thư mục dự án:
 
-Using NPM:
-
-```bash
-# Install dependencies
-$ npm install
-
-# Listen to changes in CSS Preprocessor files ( SASS files )
-$ npm run compile:scss
+```powershell
+npm install
+npm start
 ```
 
-Once you run `npm run compile:scss`, then open the `index.html` inside your favorite browser or using the live server extension.
+Mở <http://127.0.0.1:3000>. Không mở HTML trực tiếp bằng `file://`: các trang cửa hàng cần gọi API từ server và server mới kết nối database.
 
-<br>
+Mặc định server chỉ nghe trên `127.0.0.1:3000`. Có thể cấu hình host/cổng bằng `HOST` và `PORT`.
 
----
+### Tài khoản quản trị
 
-<br>
+Đặt email và mật khẩu admin trong môi trường của terminal trước khi chạy server. Ví dụ PowerShell:
 
-## Template Instructions:
-
-## Step 1 - STYLES
-
-Make sure you have started the SASS to CSS compilation by running
-
-```bash
-$ npm run compile:scss
+```powershell
+$env:ADMIN_EMAIL = "admin@example.com"
+$env:ADMIN_PASSWORD = "dung-dat-mat-khau-nay-trong-ma-nguon"
+npm start
 ```
 
-Change the color theme of the website.
+Truy cập <http://127.0.0.1:3000/login-admin.html>. Nếu hai biến chưa được đặt, chức năng admin không được cấu hình. Không ghi mật khẩu thật vào mã nguồn hoặc đưa file chứa bí mật lên Git.
 
-Go to `sass/abstracts/_variables.scss` and change the value of this sass variable called `$themeClrPrimary` to your preferred HEX color.
+## Bản đồ dự án
 
-```scss
-// Default value
-$themeClrPrimary: #0062b9;
+### Thư mục gốc
+
+| File | Vai trò |
+| --- | --- |
+| `README.md` | Tài liệu cài đặt, sử dụng, cấu trúc mã nguồn và SQLite. |
+| `package.json` | Tên dự án, yêu cầu phiên bản Node.js và các lệnh npm. |
+| `package-lock.json` | Khóa phiên bản dependency để các lần cài đặt nhất quán. |
+| `.gitignore` | Loại `node_modules`, database, file WAL, ảnh tải lên, log và cấu hình môi trường khỏi Git. |
+| `server.js` | Backend chính: tạo schema SQLite, khởi tạo dữ liệu mẫu, xử lý API, phiên đăng nhập, phục vụ file web và đóng database. |
+| `manage-products.js` | Tiện ích dòng lệnh để liệt kê, thêm, cập nhật hoặc ẩn sản phẩm trong SQLite. |
+| `manage-orders.js` | Tiện ích dòng lệnh để xem đơn và thay đổi trạng thái đơn. |
+| `index.html` | Trang portfolio chính: giới thiệu, kỹ năng, dự án và liên hệ. |
+| `index.js` | Menu responsive, nút hiện/ẩn mật khẩu và xuất danh sách kỹ năng/dự án ra CSV. |
+| `project-1.html` | Trang case study dự án 1 (Cybersecurity Learning Lab). |
+| `project-2.html` | Trang case study dự án 2 (Growth & Ads Project). |
+| `account.html` | Giao diện đăng ký/đăng nhập và thông tin tài khoản khách hàng. |
+| `keycap-store.html` | Giao diện cửa hàng, danh sách sản phẩm, đặt hàng và lịch sử đơn. |
+| `keycap-store.js` | JavaScript cửa hàng: gọi API, hiển thị sản phẩm/đơn hàng và xử lý xác thực, hồ sơ, đặt hàng. |
+| `login-admin.html` | Trang đăng nhập admin và giao diện quản lý sản phẩm sau khi đăng nhập. |
+| `admin.js` | JavaScript admin: kiểm tra phiên, đăng nhập/đăng xuất, cập nhật giá và tải ảnh sản phẩm. |
+| `admin.html` | Đường dẫn tương thích cũ; tự chuyển hướng sang `login-admin.html`. |
+| `404.html` | Trang báo lỗi khi đường dẫn không tồn tại. |
+
+### Giao diện và tài nguyên
+
+| Đường dẫn | Vai trò |
+| --- | --- |
+| `css/style.css` | CSS chính được các trang portfolio và cửa hàng dùng. Đây là CSS sinh từ Sass; sửa Sass rồi biên dịch nếu muốn thay đổi có thể tái tạo. |
+| `css/admin.css` | Kiểu riêng cho khu vực đăng nhập/quản trị. |
+| `css/404.css` | Kiểu riêng cho trang 404. |
+| `sass/main.scss` | Điểm vào Sass; nhập các biến, mixin, base, component và style trang. |
+| `sass/abstracts/_variables.scss` | Biến dùng chung như màu sắc, kích thước và breakpoint. |
+| `sass/abstracts/_mixins.scss` | Mixin Sass dùng để tái sử dụng các quy tắc style. |
+| `sass/abstracts/_utilities.scss` | Các class tiện ích dùng chung. |
+| `sass/base/_base.scss` | Reset và style nền tảng cho phần tử HTML. |
+| `sass/components/_header.scss` | Header và menu điều hướng. |
+| `sass/components/_footer.scss` | Footer. |
+| `sass/components/_mouse-scroll.scss` | Chỉ báo cuộn trang. |
+| `sass/components/_skills.scss` | Thành phần hiển thị kỹ năng. |
+| `sass/pages/_home.scss` | Bố cục và style trang chủ/portfolio. |
+| `sass/pages/_project-case-study.scss` | Style các trang case study dự án. |
+| `assets/jpeg/mobeiemi.jpg` | Ảnh đại diện/chân dung trên portfolio. |
+| `assets/jpeg/project-mockup-example.jpeg` | Ảnh mockup dùng trong nội dung dự án. |
+| `assets/png/github-ico.png` | Biểu tượng GitHub. |
+| `assets/png/insta-ico.png` | Biểu tượng Instagram. |
+| `assets/png/pj1.png`, `assets/png/pj2.png` | Ảnh minh họa dự án 1 và 2. |
+| `assets/svg/common-bg.svg` | Hình nền SVG dùng trong giao diện. |
+| `assets/svg/ham-menu.svg`, `assets/svg/ham-menu-close.svg` | Biểu tượng mở/đóng menu trên màn hình nhỏ. |
+
+### Thư mục dữ liệu được tạo khi chạy
+
+- `data/keycap-store.sqlite`: database cửa hàng mặc định. Server tự tạo thư mục, bảng và ba sản phẩm mẫu khi khởi động lần đầu.
+- `data/keycap-store.sqlite-wal`, `data/keycap-store.sqlite-shm`: file phụ SQLite dùng bởi chế độ WAL; SQLite tự quản lý chúng. Không xóa hoặc di chuyển các file này khi server đang chạy.
+- `uploads/keycaps/`: ảnh JPEG, PNG hoặc WebP admin tải lên; giới hạn 5 MB mỗi ảnh.
+- `node_modules/`: dependency cài từ npm.
+
+Các dữ liệu runtime này không được commit lên Git. Hãy sao lưu database và ảnh tải lên riêng nếu cần giữ dữ liệu cửa hàng.
+
+### Những phần chính trong `server.js`
+
+- **Cấu hình đầu file**: đọc `HOST`, `PORT`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `KEYCAP_DB_PATH`; đặt giới hạn kích thước request/ảnh.
+- **Khởi tạo database**: mở file SQLite, bật foreign key/WAL, tạo bảng và index; bổ sung cột cho database cũ nếu thiếu; tạo sản phẩm mẫu nếu chưa có sản phẩm.
+- **Hàm dùng chung**: giao dịch, trả JSON, đọc cookie, kiểm tra phiên và quyền admin/khách, kiểm tra dữ liệu, giới hạn đăng nhập và đọc đơn hàng.
+- **Phục vụ file tĩnh**: trả HTML/CSS/JS/ảnh và trang 404; không cho truy cập thư mục riêng như `data` và `node_modules`.
+- **API**: xử lý đăng nhập, tài khoản, hồ sơ, sản phẩm, admin và đơn hàng.
+- **Khởi động/tắt**: tạo HTTP server, in địa chỉ và đường dẫn database ra terminal; đóng kết nối database khi nhận tín hiệu tắt.
+
+### Các API chính
+
+| Phương thức | Đường dẫn | Chức năng |
+| --- | --- | --- |
+| `GET` | `/api/products` | Lấy sản phẩm đang bán. |
+| `GET` | `/api/auth/me` | Kiểm tra phiên khách hiện tại. |
+| `POST` | `/api/auth/register` | Tạo tài khoản khách. |
+| `POST` | `/api/auth/login` | Đăng nhập khách hoặc admin. |
+| `POST` | `/api/auth/logout` | Đăng xuất khách. |
+| `GET`, `PUT` | `/api/profile` | Đọc hoặc lưu hồ sơ khách đã đăng nhập. |
+| `GET`, `POST` | `/api/orders` | Xem đơn hoặc tạo đơn hàng; khi tạo đơn, server kiểm tra tồn kho và cập nhật đơn/sản phẩm trong một giao dịch. |
+| `GET` | `/api/admin/me` | Kiểm tra phiên admin. |
+| `POST` | `/api/admin/login`, `/api/admin/logout` | Đăng nhập hoặc đăng xuất admin. |
+| `GET` | `/api/admin/products` | Lấy danh sách sản phẩm cho admin. |
+| `PUT` | `/api/admin/products/:id` | Cập nhật giá sản phẩm. |
+| `POST` | `/api/admin/products/:id/image` | Tải ảnh sản phẩm lên. |
+
+## SQLite trong dự án
+
+**SQLite** là cơ sở dữ liệu quan hệ lưu trong một file. Ở dự án này, Node.js mở file `data/keycap-store.sqlite` bằng module tích hợp `node:sqlite` (`DatabaseSync`); không có dịch vụ database riêng, host database, cổng database hay tài khoản database để cấu hình.
+
+Khi `server.js` khởi động, ứng dụng:
+
+1. Dùng `KEYCAP_DB_PATH` nếu biến này đã được đặt; nếu không, dùng `data/keycap-store.sqlite` trong thư mục dự án.
+2. Tạo thư mục chứa database nếu chưa có.
+3. Tạo các bảng và index nếu chưa tồn tại, bật khóa ngoại và chế độ WAL.
+4. Thêm ba sản phẩm mẫu nếu bảng `products` chưa có sản phẩm.
+
+Để lưu database ở vị trí khác trên Windows, đặt biến `KEYCAP_DB_PATH` trước khi chạy server. Ví dụ:
+
+```powershell
+$env:KEYCAP_DB_PATH = "D:\keycap-data\keycap-store.sqlite"
+npm start
 ```
 
-**NOTE**: I highly recommend to checkout the [Dopefolio Playground Link](https://dopefolio-playground.netlify.app) to test the template with different colors and see which color do you like the most.
+Giữ nguyên biến này trong terminal khi chạy các lệnh `npm run products` hoặc `npm run orders`; nếu không, các script sẽ mở database mặc định thay vì file tùy chỉnh.
 
-<br/>
+Các bảng chính:
 
----
+| Bảng | Dữ liệu |
+| --- | --- |
+| `products` | Sản phẩm: mã, tên, mô tả, giá VND, tồn kho, trạng thái đang bán và đường dẫn ảnh. |
+| `users` | Tài khoản khách: email duy nhất, hash và salt mật khẩu, vai trò. Mật khẩu gốc không được lưu. |
+| `profiles` | Họ tên, số điện thoại và địa chỉ; liên kết với `users`. |
+| `sessions` | Phiên đăng nhập khách; lưu hash token và thời điểm hết hạn. |
+| `admin_sessions` | Phiên đăng nhập admin; lưu hash token và thời điểm hết hạn. |
+| `orders` | Đơn hàng, thông tin nhận hàng tại thời điểm đặt, trạng thái và tổng tiền. |
+| `order_items` | Các dòng sản phẩm trong đơn; lưu tên và giá tại thời điểm mua. |
 
-<br/>
+Quan hệ quan trọng: `profiles.user_id` và `sessions.user_id` tham chiếu `users`; `orders.user_id` tham chiếu `users`; `order_items.order_id` tham chiếu `orders`, còn `order_items.product_id` tham chiếu `products`. Khóa ngoại và giao dịch giúp tránh đơn hàng ghi dở hoặc tồn kho âm.
 
-## Step 2 - Homepage
+Trạng thái đơn hàng có thể là `pending`, `confirmed`, `shipping`, `completed` hoặc `cancelled`. Thanh toán trực tuyến và gửi email xác nhận chưa được tích hợp.
 
-Go to `/index.html` and fill your information, there are 6 sections:
+## Kết nối và xem SQLite
 
-### Header of Homepage
+### Dùng DB Browser for SQLite (giao diện)
 
-- On `.header__logo-img`, Add your own Image, Better if the background of the image is transparent so the background can match the theme color. To remove the background of your image, you can visit remove.bg where you can upload your image and it will remove the background of it.
-- On `.header__logo-sub`, Add your own Name.
+1. Cài DB Browser for SQLite từ trang chính thức của dự án đó.
+2. Khởi động ứng dụng bằng `npm start` ít nhất một lần để database được tạo.
+3. Trong DB Browser, chọn **Open Database...** và mở file `data\keycap-store.sqlite` ở thư mục dự án (hoặc file ở vị trí `KEYCAP_DB_PATH` nếu đã cấu hình).
+4. Vào **Browse Data** để chọn bảng như `products`, `users`, `orders` hoặc `order_items`; dùng **Execute SQL** để chạy truy vấn.
+5. Nếu chỉ cần xem, không sửa dữ liệu. Nếu cần chỉnh sửa bằng DB Browser, dừng server trước để tránh xung đột với tiến trình đang ghi database.
 
-```html
-<!-- **** Header of Homepage **** -->
-<header class="header">
-  <div class="header__content">
-    <div class="header__logo-container">
-      <div class="header__logo-img-cont">
-        <img
-          src="./assets/png/john-doe.png"
-          alt="Ram Maheshwari Logo Image"
-          class="header__logo-img"
-        />
-      </div>
-      <span class="header__logo-sub">John Doe</span>
-    </div>
-    <div class="header__main">
-      <ul class="header__links">
-        <li class="header__link-wrapper">
-          <a href="./" class="header__link"> Home </a>
-        </li>
-        <li class="header__link-wrapper">
-          <a href="./#about" class="header__link">About </a>
-        </li>
-        <li class="header__link-wrapper">
-          <a href="./#projects" class="header__link"> Projects </a>
-        </li>
-        <li class="header__link-wrapper">
-          <a href="./#contact" class="header__link"> Contact </a>
-        </li>
-      </ul>
-      <div class="header__main-ham-menu-cont">
-        <img
-          src="./assets/svg/ham-menu.svg"
-          alt="hamburger menu"
-          class="header__main-ham-menu"
-        />
-      </div>
-    </div>
-  </div>
-  <div class="header__sm-menu">
-    <div class="header__sm-menu-content">
-      <ul class="header__sm-menu-links">
-        <li class="header__sm-menu-link">
-          <a href="./"> Home </a>
-        </li>
+Không chia sẻ file database công khai: nó có email, hồ sơ khách hàng, địa chỉ nhận hàng và dữ liệu phiên. Nếu chỉnh sửa trực tiếp, hãy sao lưu trước. Không xóa các file `-wal`/`-shm` trong lúc server đang hoạt động.
 
-        <li class="header__sm-menu-link">
-          <a href="./#about"> About </a>
-        </li>
+### Kết nối từ Node.js
 
-        <li class="header__sm-menu-link">
-          <a href="./#projects"> Projects </a>
-        </li>
+Ứng dụng và các script quản lý đã kết nối theo mẫu dưới đây:
 
-        <li class="header__sm-menu-link">
-          <a href="./#contact"> Contact </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</header>
-<!-- END Header -->
+```js
+const path = require('node:path')
+const { DatabaseSync } = require('node:sqlite')
+
+const databasePath = path.join(__dirname, 'data', 'keycap-store.sqlite')
+const database = new DatabaseSync(databasePath)
+
+const products = database.prepare(
+  'SELECT id, name, price, stock FROM products WHERE is_active = 1',
+).all()
+
+console.table(products)
+database.close()
 ```
 
-### Hero Section of Homepage
+`DatabaseSync` là API đồng bộ: `prepare()` tạo câu lệnh, `.all()` lấy nhiều dòng, `.get()` lấy một dòng, `.run()` chạy lệnh thêm/sửa/xóa. Dùng dấu `?` và tham số `.run(...)`/`.get(...)` cho dữ liệu đầu vào thay vì nối chuỗi SQL; đóng kết nối bằng `database.close()` khi xong.
 
-- On `.heading-primary`, put your custom title.
-- On `.text-primary`, put a short description about yourself.
-- On `.home-hero__social-icon-link`, fill the href attribute with a link related to your social media account.
+### Truy vấn mẫu
 
-```html
-<!-- **** Hero Section of Homepage **** -->
-<section class="home-hero">
-  <div class="home-hero__content">
-    <h1 class="heading-primary">Hey, My name is John Doe</h1>
-    <div class="home-hero__info">
-      <p class="text-primary">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic facilis
-        tempora explicabo quae quod deserunt eius sapiente solutions for complex
-        problems
-      </p>
-    </div>
-    <div class="home-hero__cta">
-      <a href="./#projects" class="btn btn--bg">Projects</a>
-    </div>
-  </div>
-  <div class="home-hero__socials">
-    <div class="home-hero__social">
-      <a href="#" class="home-hero__social-icon-link">
-        <img
-          src="./assets/png/linkedin-ico.png"
-          alt="icon"
-          class="home-hero__social-icon"
-        />
-      </a>
-    </div>
-    <div class="home-hero__social">
-      <a href="#" class="home-hero__social-icon-link">
-        <img
-          src="./assets/png/github-ico.png"
-          alt="icon"
-          class="home-hero__social-icon"
-        />
-      </a>
-    </div>
-    <div class="home-hero__social">
-      <a href="#" class="home-hero__social-icon-link">
-        <img
-          src="./assets/png/twitter-ico.png"
-          alt="icon"
-          class="home-hero__social-icon"
-        />
-      </a>
-    </div>
-    <div class="home-hero__social">
-      <a href="#" class="home-hero__social-icon-link">
-        <img
-          src="./assets/png/yt-ico.png"
-          alt="icon"
-          class="home-hero__social-icon"
-        />
-      </a>
-    </div>
-    <div class="home-hero__social">
-      <a
-        href="#"
-        class="home-hero__social-icon-link home-hero__social-icon-link--bd-none"
-      >
-        <img
-          src="./assets/png/insta-ico.png"
-          alt="icon"
-          class="home-hero__social-icon"
-        />
-      </a>
-    </div>
-  </div>
-  <div class="home-hero__mouse-scroll-cont">
-    <div class="mouse"></div>
-  </div>
-</section>
-<!-- /END Hero Section -->
+```sql
+SELECT id, name, price, stock, is_active
+FROM products
+ORDER BY name;
+
+SELECT id, full_name, phone, address
+FROM profiles;
+
+SELECT id, user_id, status, total_amount, created_at
+FROM orders
+ORDER BY created_at DESC;
+
+SELECT order_id, product_name, quantity, unit_price
+FROM order_items
+ORDER BY order_id;
 ```
 
-### About Section
+## Quản lý cửa hàng
 
-- On `.heading-sec__sub`, put a short description about the section.
-- On `.about__content-details-para`, put your details here and use `<strong></strong>` tag to highlight specific keywords.
-- On `.skills__skill`, mention your skill one by one.
+Tắt server trước khi chạy script quản lý SQLite để tránh ghi đồng thời.
 
-```html
-<!-- **** About Section of Homepage **** -->
-<section id="about" class="about sec-pad">
-  <div class="main-container">
-    <h2 class="heading heading-sec heading-sec__mb-med">
-      <span class="heading-sec__main">About Me</span>
-      <span class="heading-sec__sub">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic facilis
-        tempora explicabo quae quod deserunt eius sapiente
-      </span>
-    </h2>
-    <div class="about__content">
-      <div class="about__content-main">
-        <h3 class="about__content-title">Get to know me!</h3>
-        <div class="about__content-details">
-          <p class="about__content-details-para">
-            Hey! It's
-            <strong>John Doe</strong>
-            and I'm a <strong> Frontend Web Developer </strong> located in Los
-            Angeles. I've done
-            <strong> remote </strong>
-            projects for agencies, consulted for startups, and collaborated with
-            talented people to create
-            <strong>digital products </strong>
-            for both business and consumer use.
-          </p>
-          <p class="about__content-details-para">
-            I'm a bit of a digital product junky. Over the years, I've used
-            hundreds of web and mobile apps in different industries and
-            verticals. Feel free to
-            <strong>contact</strong> me here.
-          </p>
-        </div>
-        <a href="./#contact" class="btn btn--med btn--theme dynamicBgClr"
-          >Contact</a
-        >
-      </div>
-      <div class="about__content-skills">
-        <h3 class="about__content-title">My Skills</h3>
-        <div class="skills">
-          <div class="skills__skill">HTML</div>
-          <div class="skills__skill">CSS</div>
-          <div class="skills__skill">JavaScript</div>
-          <div class="skills__skill">React</div>
-          <div class="skills__skill">SASS</div>
-          <div class="skills__skill">GIT</div>
-          <div class="skills__skill">Shopify</div>
-          <div class="skills__skill">Wordpress</div>
-          <div class="skills__skill">Google ADS</div>
-          <div class="skills__skill">Facebook Ads</div>
-          <div class="skills__skill">Android</div>
-          <div class="skills__skill">IOS</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- END About Section -->
+Liệt kê sản phẩm:
+
+```powershell
+npm run products -- list
 ```
 
-### Projects
+Thêm sản phẩm (giá tính theo VND, tồn kho là số nguyên không âm):
 
-- On `.heading-sec__sub`, put a short description about the section.
-- `.projects__row` is the row for each project in your portfolio.
-- One `.projects__row` for each project in your portfolio ( so for example, if you have 3 projects then you need 3 `.projects__row` one by one).
-
-- Inside each `projects__row`, there are 4 main elements.
-
-  - Project Image is located at `.projects__row-img` where you can add the URL for your project mockup/image. You can use websites like [Media Modifier](https://mediamodifier.com/) and [SmartMockups](https://smartmockups.com) to generate mockups for free. Just make sure to crop the extra white space around your mockup so the mockups can look bigger and the size of the mockup file will be less.
-
-  - `.projects__row-content-title` is where you need to add your Project title.
-  - `.projects__row-content-desc` is where you need to add a short 2-3 lines description of your project. As there's going to be a separate page for each project so there you can add all the details for each project on the specific project page.
-  - The Anchor tag ( **Case Study** button) on press will take you to the details page for each project ( For example: If you click the **Case Study** button of Project 1 then it will take you to the `project-1.html` file where you will have all the details about that particular project).
-
-Currently, I have already added a separate for each project ( considering there are 3 projects ) the file names are `project-1.html`, `project-2.html`, and `project-3.html`. They all contain the same code only the project title, description and image will change. If you like to add more projects then you can just create a new file for it and paste the same code that we have in `project-1.html` as the code is going to be the same and the only thing that you need to change is the data inside each project.
-
-```html
-<!-- **** Projects Section of Homepage **** -->
-<section id="projects" class="projects sec-pad">
-  <div class="main-container">
-    <h2 class="heading heading-sec heading-sec__mb-bg">
-      <span class="heading-sec__main">Projects</span>
-      <span class="heading-sec__sub">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic facilis
-        tempora explicabo quae quod deserunt eius sapiente
-      </span>
-    </h2>
-
-    <div class="projects__content">
-      <div class="projects__row">
-        <div class="projects__row-img-cont">
-          <img
-            src="./assets/jpeg/project-mockup-example.jpeg"
-            alt="Software Screenshot"
-            class="projects__row-img"
-            loading="lazy"
-          />
-        </div>
-        <div class="projects__row-content">
-          <h3 class="projects__row-content-title">Project 1</h3>
-          <p class="projects__row-content-desc">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic facilis
-            tempora, explicabo quae quod deserunt eius sapiente praesentium.
-          </p>
-          <a
-            href="./project-1.html"
-            class="btn btn--med btn--theme dynamicBgClr"
-            target="_blank"
-            >Case Study</a
-          >
-        </div>
-      </div>
-      <div class="projects__row">
-        <div class="projects__row-img-cont">
-          <img
-            src="./assets/jpeg/project-mockup-example.jpeg"
-            alt="Software Screenshot"
-            class="projects__row-img"
-            loading="lazy"
-          />
-        </div>
-        <div class="projects__row-content">
-          <h3 class="projects__row-content-title">Project 2</h3>
-          <p class="projects__row-content-desc">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic facilis
-            tempora, explicabo quae quod deserunt eius sapiente praesentium.
-          </p>
-          <a
-            href="./project-2.html"
-            class="btn btn--med btn--theme dynamicBgClr"
-            target="_blank"
-            >Case Study</a
-          >
-        </div>
-      </div>
-      <div class="projects__row">
-        <div class="projects__row-img-cont">
-          <img
-            src="./assets/jpeg/project-mockup-example.jpeg"
-            alt="Software Screenshot"
-            class="projects__row-img"
-            loading="lazy"
-          />
-        </div>
-        <div class="projects__row-content">
-          <h3 class="projects__row-content-title">Project 3</h3>
-          <p class="projects__row-content-desc">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic facilis
-            tempora, explicabo quae quod deserunt eius sapiente praesentium.
-          </p>
-          <a
-            href="./project-3.html"
-            class="btn btn--med btn--theme dynamicBgClr"
-            target="_blank"
-            >Case Study</a
-          >
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- END Projects Section -->
+```powershell
+npm run products -- add artisan-mau-do "Artisan Màu Đỏ" 250000 5 "Keycap artisan thủ công"
 ```
 
-### Contact Section
+Cập nhật giá/tồn kho hoặc ẩn sản phẩm:
 
-- On `.heading-sec__sub`, put a short description about the section.
-- `.contact__form-field` is the field inside form. Currently, there are 3 fields but you can add more fields as per your need but just make sure to change the name of **label** and **input/textarea** inside it.
-
-If you like to know how to submit forms so you can receive the form details in your email then highly recommend using **formspree.io** as it's easier to set up and free to use. If you are using **Netlify** to host the site then Netlify has an inbuilt form receiver which you can use instead of **formspree**.
-
-```html
-<!-- **** Contact Section of Homepage **** -->
-<section id="contact" class="contact sec-pad dynamicBg">
-  <div class="main-container">
-    <h2 class="heading heading-sec heading-sec__mb-med">
-      <span class="heading-sec__main heading-sec__main--lt">Contact</span>
-      <span class="heading-sec__sub heading-sec__sub--lt">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic facilis
-        tempora explicabo quae quod deserunt eius sapiente
-      </span>
-    </h2>
-    <div class="contact__form-container">
-      <form action="#" class="contact__form">
-        <div class="contact__form-field">
-          <label class="contact__form-label" for="name">Name</label>
-          <input
-            required
-            placeholder="Enter Your Name"
-            type="text"
-            class="contact__form-input"
-            name="name"
-            id="name"
-          />
-        </div>
-        <div class="contact__form-field">
-          <label class="contact__form-label" for="email">Email</label>
-          <input
-            required
-            placeholder="Enter Your Email"
-            type="text"
-            class="contact__form-input"
-            name="email"
-            id="email"
-          />
-        </div>
-        <div class="contact__form-field">
-          <label class="contact__form-label" for="message">Message</label>
-          <textarea
-            required
-            cols="30"
-            rows="10"
-            class="contact__form-input"
-            placeholder="Enter Your Message"
-            name="message"
-            id="message"
-          ></textarea>
-        </div>
-        <button type="submit" class="btn btn--theme contact__btn">
-          Submit
-        </button>
-      </form>
-    </div>
-  </div>
-</section>
-<!-- END Contact Section -->
+```powershell
+npm run products -- update artisan-mau-do 270000 8
+npm run products -- deactivate artisan-mau-do
 ```
 
+Liệt kê đơn hàng và cập nhật trạng thái bằng toàn bộ mã hoặc tiền tố đủ phân biệt:
 
-
-### Footer Section
-
-- Inside h4 tag with the class `heading heading-sm text-lt` add your name.
-- On `.main-footer__short-desc` put a short description about yourself.
-- On Anchor tag inside `.main-footer__social-cont`, fill the href attribute with a link related to your social media account.
-
-```html
-<!-- **** Footer Section **** -->
-<footer class="main-footer">
-  <div class="main-container">
-    <div class="main-footer__upper">
-      <div class="main-footer__row main-footer__row-1">
-        <h2 class="heading heading-sm main-footer__heading-sm">
-          <span>Social</span>
-        </h2>
-        <div class="main-footer__social-cont">
-          <a target="_blank" rel="noreferrer" href="#">
-            <img
-              class="main-footer__icon"
-              src="./assets/png/linkedin-ico.png"
-              alt="icon"
-            />
-          </a>
-          <a target="_blank" rel="noreferrer" href="#">
-            <img
-              class="main-footer__icon"
-              src="./assets/png/github-ico.png"
-              alt="icon"
-            />
-          </a>
-          <a target="_blank" rel="noreferrer" href="#">
-            <img
-              class="main-footer__icon"
-              src="./assets/png/twitter-ico.png"
-              alt="icon"
-            />
-          </a>
-          <a target="_blank" rel="noreferrer" href="#">
-            <img
-              class="main-footer__icon"
-              src="./assets/png/yt-ico.png"
-              alt="icon"
-            />
-          </a>
-          <a target="_blank" rel="noreferrer" href="#">
-            <img
-              class="main-footer__icon main-footer__icon--mr-none"
-              src="./assets/png/insta-ico.png"
-              alt="icon"
-            />
-          </a>
-        </div>
-      </div>
-      <div class="main-footer__row main-footer__row-2">
-        <h4 class="heading heading-sm text-lt">John Doe</h4>
-        <p class="main-footer__short-desc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit facilis
-          tempora explicabo quae quod deserunt
-        </p>
-      </div>
-    </div>
-
-    <div class="main-footer__lower">
-      &copy; Copyright 2021. Made by
-      <a rel="noreferrer" target="_blank" href="https://rammaheshwari.com"
-        >Ram Maheshwari</a
-      >
-    </div>
-  </div>
-</footer>
-<!-- END Footer Section -->
+```powershell
+npm run orders -- list
+npm run orders -- status <ma-don-hoac-tien-to> confirmed
 ```
 
-<br/>
+Admin cũng có thể cập nhật giá và ảnh ở `login-admin.html`. Sản phẩm ẩn và đơn hàng cũ vẫn được giữ trong database.
 
----
+## Các lệnh npm
 
-<br/>
+| Lệnh | Tác dụng |
+| --- | --- |
+| `npm start` | Chạy backend và website tại host/cổng cấu hình. |
+| `npm run products -- ...` | Chạy tiện ích quản lý sản phẩm. |
+| `npm run orders -- ...` | Chạy tiện ích quản lý đơn hàng. |
+| `npm run compile:scss` | Biên dịch Sass sang CSS ở chế độ theo dõi thay đổi. |
+| `npm run prefix:css` | Thêm vendor prefix cho `css/style.css`. |
+| `npm run compress:css` | Nén CSS. |
+| `npm run build` | Chạy prefix và nén CSS. |
 
-## Step 3 - Project Page
+## Ghi chú triển khai
 
-Each project will have its own Page. The project page will have important details about the project like the Project Title, Description, Technologies, Project Links, etc.
-
-### Project Hero Section
-
-- On `.heading-primary` add the Project Title.
-- On `.text-primary` add a short description about the Project.
-- On Anchor Tag that says **Live Link** with class `btn btn--bg`, add the Project Live Link as the value for the href attribute.
-
-<!-- **** Project Section **** -->
-
-```html
-<section class="project-cs-hero">
-  <div class="project-cs-hero__content">
-    <h1 class="heading-primary">Project 1</h1>
-    <div class="project-cs-hero__info">
-      <p class="text-primary">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos in
-        numquam incidunt earum quaerat cum fuga, atque similique natus nobis
-        sit.
-      </p>
-    </div>
-    <div class="project-cs-hero__cta">
-      <a href="#" class="btn btn--bg" target="_blank">Live Link</a>
-    </div>
-  </div>
-</section>
-```
-
-<!-- **** END Project Hero Section **** -->
-
-### Project Details Section
-
-- On `.project-details__showcase-img`, change the value of **src** to the location/link of Project Mockup.
-- On `.project-details__desc-para` to add a detailed paragraph describing your project. Use multiple `.project-details__desc-para` elements for multiple paragraphs.
-- On `.skills` mention the skills that were used to build the project inside `.skills__skill` to mention each skill.
-- On Anchor Tag that says **Live Link** with class `btn btn--med btn--theme project-details__links-btn`, add the Project Live Link as the value for the href attribute.
-- On Anchor Tag that says **Code Link** with class `btn btn--med btn--theme-inv project-details__links-btn`, add the Project's Code Link ( Repository Link ) as the value for the href attribute.
-
-<!-- **** Project Details Section **** -->
-
-```html
-<section class="project-details">
-  <div class="main-container">
-    <div class="project-details__content">
-      <div class="project-details__showcase-img-cont">
-        <img
-          src="./assets/jpeg/project-mockup-example.jpeg"
-          alt="Project Image"
-          class="project-details__showcase-img"
-        />
-      </div>
-      <div class="project-details__content-main">
-        <div class="project-details__desc">
-          <h3 class="project-details__content-title">Project Overview</h3>
-          <p class="project-details__desc-para">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque alias
-            tenetur minus quaerat aliquid, aut provident blanditiis, deleniti
-            aspernatur ipsam eaque veniam voluptatem corporis vitae mollitia
-            laborum corrupti ullam rem. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Neque alias tenetur minus quaerat aliquid, aut
-            provident blanditiis, deleniti aspernatur ipsam eaque veniam
-            voluptatem corporis vitae mollitia laborum corrupti ullam rem?
-          </p>
-          <p class="project-details__desc-para">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque alias
-            tenetur minus quaerat aliquid, aut provident blanditiis, deleniti
-            aspernatur ipsam eaque veniam voluptatem corporis vitae mollitia
-            laborum corrupti ullam rem?
-          </p>
-        </div>
-        <div class="project-details__tools-used">
-          <h3 class="project-details__content-title">Tools Used</h3>
-          <div class="skills">
-            <div class="skills__skill">HTML</div>
-            <div class="skills__skill">CSS</div>
-            <div class="skills__skill">JavaScript</div>
-            <div class="skills__skill">React</div>
-            <div class="skills__skill">SASS</div>
-            <div class="skills__skill">GIT</div>
-            <div class="skills__skill">Shopify</div>
-            <div class="skills__skill">Wordpress</div>
-            <div class="skills__skill">Google ADS</div>
-            <div class="skills__skill">Facebook Ads</div>
-            <div class="skills__skill">Android</div>
-            <div class="skills__skill">IOS</div>
-          </div>
-        </div>
-        <div class="project-details__links">
-          <h3 class="project-details__content-title">See Live</h3>
-          <a
-            href="#"
-            class="btn btn--med btn--theme project-details__links-btn"
-            target="_blank"
-            >Live Link</a
-          >
-          <a
-            href="#"
-            class="btn btn--med btn--theme-inv project-details__links-btn"
-            target="_blank"
-            >Code Link</a
-          >
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-```
-
-<!-- **** END Project Details Section **** -->
-
-<br>
-
----
-
-<br>
-
-
-## Deployment 📦
-
-Once you have done with your setup. You need to put your website online!
-
-I highly recommend to use [Netlify](https://netlify.com) to achieve this on the EASIEST WAY
-
-Whenever you wanna host a new site on Netlify. You will need to press the **Create New Site** button from the Netlify's dashboard once you login into Netlify.
-
-Once you press the **Create Site Button** then you will have to follow the 3 steps:
-
-1. You will have to select your Github account.
-
-2. Then select the Repository which you wanna host, in this case its your Portfolio website ( Clone of Dopefolio )
-
-3. In the 3rd step, you will have to modify the **Site settings and deploy**, keep everything as it is but just make sure to modify the **Build command** and set its value to **npm run build** and then modify the **Publish directory** and set its value to **/** as shown in the  **image** below
-
-<div align="center">
-  <img src="https://i.ibb.co/hDTTrPB/Set-Build-Command-to.png" alt="Dopefolio Build Command Example and Publish Directory Value" width="100%" />
-  <br>
-</div>
-
-<br>
-
-Then hit the **Deploy site** button and your **Portfolio Site** is live 🥳
-
-<br>
-
----
-
-<br>
-
-## Give a Star ⭐
-
-If you like this project then give it a **Github** star by pressing the **Star** button ⭐
-
-<br>
-
----
-
-<br>
-
-## Author 👨‍💻
-
-- **Ram Maheshwari** - **[Linkedin](https://linkedin.com/in/rammcodes)**, **[Instagram](https://instagram.com/rammcodes_)**, **[Twitter](https://twitter.com/rammcodes)**, **[Github](https://github.com/rammcodes)**, **[Portfolio](https://rammaheshwari.com)**  
-
-<br>
-
-#### Note: 
-I'm currently looking for good **Job Opportunities** both **Remote ( Worldwide )** and **On-Site ( Anywhere in India )**. So, if you have a good opportunity that matches my skills experience then you can contact me on my **[Linkedin](https://linkedin.com/in/rammcodes)** or my email id **rammcodes@gmail.com** 🙌
-
-
-<br>
-
----
-
-<br>
-
-## Special Thanks ❤️
-
-Special thanks to [Jacobo Martínez](https://github.com/cobidev) for inspiring me to create something useful for the Developer Community. **Jacobo** is the creator of [Simplefolio](https://github.com/cobidev/simplefolio) which is another great Portfolio website Template for Developers. Check it out and show him some love ❤️
-
-<br>
-
----
-
-<br>
-
-## License 📄
-
-This project is licensed under the  **GPL-3.0** License - see the [LICENSE](LICENSE) file for details
-
+Để đưa website lên mạng công khai, cấu hình thông tin admin an toàn, đặt `NODE_ENV=production`, bật HTTPS và triển khai sau reverse proxy đáng tin cậy. Cookie phiên chỉ thêm cờ `Secure` khi `NODE_ENV=production`. Hãy thiết lập backup có kiểm soát quyền truy cập cho database và thư mục ảnh; không commit dữ liệu cửa hàng lên repository.

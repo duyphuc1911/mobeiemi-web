@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập admin | Mobeiemi</title>
+    <meta name="description" content="Quản lý sản phẩm Keycap Store." />
+
+    <link rel="stylesheet" href="./css/style.css?v=7" />
+    <link rel="stylesheet" href="./css/admin.css?v=6" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__content">
+        <div class="header__logo-container">
+          <div class="header__logo-img-cont">
+            <img src="./assets/jpeg/mobeiemi.jpg" alt="Mobeiemi Logo Image" class="header__logo-img" />
+          </div>
+          <span class="header__logo-sub">MOBEIEMI (PUCK)</span>
+        </div>
+        <div class="header__main">
+          <ul class="header__links">
+            <li class="header__link-wrapper"><a href="./index.html" class="header__link">Home</a></li>
+            <li class="header__link-wrapper"><a href="./keycap-store.html" class="header__link">Cửa hàng</a></li>
+          </ul>
+          <div class="header__main-ham-menu-cont">
+            <img src="./assets/svg/ham-menu.svg" alt="Mở menu" class="header__main-ham-menu" />
+            <img src="./assets/svg/ham-menu-close.svg" alt="Đóng menu" class="header__main-ham-menu-close d-none" />
+          </div>
+        </div>
+      </div>
+      <div class="header__sm-menu">
+        <div class="header__sm-menu-content">
+          <ul class="header__sm-menu-links">
+            <li class="header__sm-menu-link"><a href="./index.html">Home</a></li>
+            <li class="header__sm-menu-link"><a href="./keycap-store.html">Cửa hàng</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="admin-page sec-pad">
+        <div class="main-container">
+          <h1 class="heading heading-sec heading-sec__mb-bg">
+            <span class="heading-sec__main">ADMIN KEYCAP STORE</span>
+            <span class="heading-sec__sub">Thay đổi giá bán và hình ảnh sản phẩm.</span>
+          </h1>
+
+          <section id="admin-login-panel" class="keycap-shop__account admin-panel">
+            <h2 class="keycap-shop__panel-title">Đăng nhập admin</h2>
+            <form id="admin-login-form" class="keycap-shop__form">
+              <div class="keycap-shop__field">
+                <label for="admin-email">Email admin</label>
+                <input id="admin-email" name="email" type="email" autocomplete="username" required />
+              </div>
+              <div class="keycap-shop__field">
+                <label for="admin-password">Mật khẩu</label>
+                <div class="keycap-shop__password-control">
+                  <input id="admin-password" name="password" type="password" autocomplete="current-password" required />
+                  <button class="keycap-shop__password-toggle" type="button" data-password-toggle aria-controls="admin-password" aria-label="Hiện mật khẩu" aria-pressed="false">
+                    <svg class="password-monkey" viewBox="0 0 48 36" aria-hidden="true">
+                      <circle cx="11" cy="18" r="5.5" fill="#a96738" />
+                      <circle cx="37" cy="18" r="5.5" fill="#a96738" />
+                      <circle cx="24" cy="17" r="12" fill="#bd7b49" />
+                      <ellipse cx="24" cy="21" rx="8.5" ry="6.5" fill="#f4d8b9" />
+                      <ellipse cx="20" cy="16" rx="1.2" ry="1.7" fill="#30251f" />
+                      <ellipse cx="28" cy="16" rx="1.2" ry="1.7" fill="#30251f" />
+                      <ellipse cx="24" cy="20" rx="2" ry="1.4" fill="#513321" />
+                      <path d="M22 23q2 2 4 0" fill="none" stroke="#513321" stroke-linecap="round" stroke-width="1.2" />
+                      <path class="password-monkey__arm password-monkey__arm--left" d="M13 30q1-7 7-13" fill="none" stroke="#8f542e" stroke-linecap="round" stroke-width="4" />
+                      <path class="password-monkey__arm password-monkey__arm--right" d="M35 30q-1-7-7-13" fill="none" stroke="#8f542e" stroke-linecap="round" stroke-width="4" />
+                      <g class="password-monkey__hand password-monkey__hand--left">
+                        <ellipse cx="19" cy="16" rx="4.7" ry="4.2" fill="#e5a46b" stroke="#8f542e" stroke-width="1" />
+                        <path d="M16 14q-1-2 1-2m2 1q-1-2 1-2m2 2q0-2 2-1" fill="none" stroke="#8f542e" stroke-linecap="round" stroke-width="1" />
+                      </g>
+                      <g class="password-monkey__hand password-monkey__hand--right">
+                        <ellipse cx="29" cy="16" rx="4.7" ry="4.2" fill="#e5a46b" stroke="#8f542e" stroke-width="1" />
+                        <path d="M26 13q0-2 2-1m1 1q0-2 2-1m1 2q1-2 2 0" fill="none" stroke="#8f542e" stroke-linecap="round" stroke-width="1" />
+                      </g>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <button class="btn btn--med btn--theme keycap-shop__button" type="submit">Đăng nhập</button>
+            </form>
+          </section>
+
+          <section id="admin-dashboard" class="admin-panel" hidden>
+            <div class="admin-dashboard__heading">
+              <p id="admin-email-label" class="keycap-shop__panel-description"></p>
+              <button id="admin-logout" class="keycap-shop__text-button" type="button">Đăng xuất</button>
+            </div>
+            <div id="admin-products" class="admin-products" aria-live="polite"></div>
+          </section>
+          <p id="admin-status" class="keycap-shop__status" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+
+    <script src="./index.js?v=4"></script>
+    <script src="./admin.js?v=2"></script>
+  </body>
+</html>

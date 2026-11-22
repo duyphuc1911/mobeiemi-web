@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keycap Store | Mobeiemi</title>
+    <meta name="description" content="Cửa hàng keycap Mobeiemi." />
+
+    <link rel="stylesheet" href="./css/style.css?v=2" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__content">
+        <div class="header__logo-container">
+          <div class="header__logo-img-cont">
+            <img
+              src="./assets/jpeg/mobeiemi.jpg"
+              alt="Mobeiemi Logo Image"
+              class="header__logo-img"
+            />
+          </div>
+          <span class="header__logo-sub">Mobeiemi (Puck)</span>
+        </div>
+        <div class="header__main">
+          <ul class="header__links">
+            <li class="header__link-wrapper">
+              <a href="./index.html" class="header__link">Home</a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#about" class="header__link">About</a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#projects" class="header__link">Projects</a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./keycap-store.html" class="header__link">Keycaps</a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./account.html" class="header__link">Đăng nhập</a>
+            </li>
+          </ul>
+          <div class="header__main-ham-menu-cont">
+            <img
+              src="./assets/svg/ham-menu.svg"
+              alt="Mở menu"
+              class="header__main-ham-menu"
+            />
+            <img
+              src="./assets/svg/ham-menu-close.svg"
+              alt="Đóng menu"
+              class="header__main-ham-menu-close d-none"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="header__sm-menu">
+        <div class="header__sm-menu-content">
+          <ul class="header__sm-menu-links">
+            <li class="header__sm-menu-link"><a href="./index.html">Home</a></li>
+            <li class="header__sm-menu-link"><a href="./index.html#about">About</a></li>
+            <li class="header__sm-menu-link"><a href="./index.html#projects">Projects</a></li>
+            <li class="header__sm-menu-link"><a href="./keycap-store.html">Keycaps</a></li>
+            <li class="header__sm-menu-link"><a href="./account.html">Đăng nhập</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="keycaps" class="keycap-shop sec-pad">
+        <div class="main-container">
+          <h2 class="heading heading-sec heading-sec__mb-bg">
+            <span class="heading-sec__main">Keycap Store</span>
+            <span class="heading-sec__sub">
+              Một góc nhỏ dành cho những chiếc bàn phím thật có cá tính. Nhắn mình để xem mẫu đang có và nhận tư vấn nhé.
+            </span>
+          </h2>
+
+          <div class="keycap-shop__account">
+            <div id="shop-login-required">
+              <h3 class="keycap-shop__panel-title">Đăng nhập để đặt hàng</h3>
+              <p class="keycap-shop__panel-description">
+                Đăng nhập hoặc tạo tài khoản để đặt mua và theo dõi đơn hàng.
+              </p>
+              <a class="btn btn--med btn--theme keycap-shop__button" href="./account.html">Đăng nhập / Đăng ký</a>
+            </div>
+            <div id="shop-user-panel" hidden>
+              <div class="keycap-shop__user-heading">
+                <div>
+                  <h3 class="keycap-shop__panel-title">Thông tin nhận hàng</h3>
+                  <p id="shop-user-email" class="keycap-shop__panel-description"></p>
+                </div>
+                <button id="shop-logout" class="keycap-shop__text-button" type="button">Đăng xuất</button>
+              </div>
+              <form id="shop-profile-form" class="keycap-shop__form">
+                <div class="keycap-shop__field">
+                  <label for="shop-profile-name">Họ và tên</label>
+                  <input id="shop-profile-name" name="full_name" type="text" autocomplete="name" maxlength="100" required />
+                </div>
+                <div class="keycap-shop__field">
+                  <label for="shop-profile-phone">Số điện thoại</label>
+                  <input id="shop-profile-phone" name="phone" type="tel" autocomplete="tel" maxlength="20" required />
+                </div>
+                <div class="keycap-shop__field">
+                  <label for="shop-profile-address">Địa chỉ nhận hàng</label>
+                  <textarea id="shop-profile-address" name="address" autocomplete="street-address" maxlength="500" rows="2" required></textarea>
+                </div>
+                <button class="btn btn--med btn--theme keycap-shop__button" type="submit">Lưu thông tin</button>
+              </form>
+              <div class="keycap-shop__orders">
+                <h4 class="keycap-shop__orders-title">Đơn hàng của bạn</h4>
+                <div id="shop-orders" class="keycap-shop__order-list"></div>
+              </div>
+            </div>
+            <p id="shop-status" class="keycap-shop__status" role="status" aria-live="polite"></p>
+          </div>
+
+          <div id="keycap-products" class="keycap-shop__grid" aria-live="polite">
+            <p class="keycap-shop__loading">Đang tải sản phẩm...</p>
+          </div>
+          <p class="keycap-shop__note">Đơn hàng sẽ được xác nhận thủ công trước khi giao. Vui lòng lưu thông tin nhận hàng trước khi đặt.</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="./index.js"></script>
+    <script src="./keycap-store.js?v=3"></script>
+  </body>
+</html>
